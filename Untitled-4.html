@@ -1,0 +1,764 @@
+FRONT 
+
+
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vantal Construção - Registro de Atividades</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- Ícones Font Awesome para o menu e caminhões -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Ícone para o título da página -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%236B4EEA'><path d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z'/></svg>" type="image/svg+xml">
+
+    <style>
+        /* Importação de fontes */
+        @import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=Open+Sans:wght@400;700&display=swap');
+
+        /* Reset básico e variáveis - TEMA PADRÃO (24280 - Vermelho/Roxo) */
+        :root {
+            --primary-color: #8A2BE2; /* Azul violeta para detalhes */
+            --secondary-color: #FF69B4; /* Rosa choque para acentos */
+            --header-bg: linear-gradient(135deg, #A52A2A 0%, #800000 100%); /* Vermelho Escuro - Base 24280 */
+            --header-text: #FFFFFF;
+            --button-gradient-start: #FF9A8B; /* Botão de ação (vendas) */
+            --button-gradient-end: #FF6A88;
+            --fuel-button-gradient-start: #4CAF50; /* Botão de ação (abastecimento) */
+            --fuel-button-gradient-end: #388E3C;
+            --nav-active-color: #A52A2A; /* Cor ativa da nav para 24280 */
+
+            /* Cores Comuns */
+            --background-light: #F0F2F5;
+            --background-dark: #FFFFFF;
+            --text-dark: #333333;
+            --text-light: #666666;
+            --border-radius-soft: 10px;
+            --box-shadow-soft: 0 4px 12px rgba(0, 0, 0, 0.08);
+            --input-bg: #EAEAEA;
+            --input-border: #D0D0D0;
+            --button-shadow: 0 4px 12px rgba(255, 106, 136, 0.3);
+            --notification-success: #4CAF50;
+            --notification-error: #F44336;
+            --input-group-margin-bottom: 10px;
+            --input-padding: 8px 10px;
+            --nav-height: 60px;
+            --nav-bg: #FFFFFF;
+            --nav-shadow: 0 -4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Tema para o DAF 330 (Cores de DAF - Azul/Branco) */
+        .theme-daf330 {
+            --primary-color: #1E90FF; /* Azul mais claro */
+            --secondary-color: #ADD8E6; /* Azul claro para acentos */
+            --header-bg: linear-gradient(135deg, #1E90FF 0%, #00008B 100%); /* Azul Escuro DAF */
+            --header-text: #FFFFFF;
+            --button-gradient-start: #6495ED; /* Azul milho */
+            --button-gradient-end: #4169E1; /* Azul royal */
+            --fuel-button-gradient-start: #00BFFF; /* Azul vibrante */
+            --fuel-button-gradient-end: #008B8B;
+            --nav-active-color: #1E90FF; /* Cor ativa da nav para DAF */
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Open Sans', sans-serif;
+            background: linear-gradient(135deg, #87CEEB, #ADD8E6); /* Céu azul suave de fundo */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            color: var(--text-dark);
+            overflow: hidden;
+            position: relative;
+            transition: background 0.5s ease; /* Suaviza a transição de fundo */
+        }
+
+        /* Container principal do aplicativo (simulando um celular/card em desktop) */
+        .app-container {
+            background-color: var(--background-dark);
+            border-radius: var(--border-radius-soft);
+            box-shadow: var(--box-shadow-soft);
+            width: 100%;
+            max-width: 500px;
+            height: 95vh;
+            max-height: 800px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Elementos de fundo de jogo infantil */
+        body::before, body::after, .floating-icon-1, .floating-icon-2 {
+            content: '';
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.6;
+            z-index: 0;
+        }
+        body::before {
+            width: 200px; height: 200px; background-color: #FFD700; top: 10%; left: 5%; animation: floatEffect 8s ease-in-out infinite alternate;
+        }
+        body::after {
+            width: 150px; height: 150px; background-color: #98FB98; bottom: 15%; right: 10%; animation: floatEffect 10s ease-in-out infinite alternate-reverse;
+        }
+        .floating-icon-1, .floating-icon-2 {
+            filter: none;
+            opacity: 1;
+            font-size: 80px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: none;
+        }
+        .floating-icon-1 {
+            top: 25%; left: -5%; color: rgba(255, 160, 122, 0.4);
+            animation: floatEffect 9s ease-in-out infinite alternate;
+        }
+        .floating-icon-2 {
+            bottom: 20%; right: -5%; color: rgba(100, 149, 237, 0.4);
+            animation: floatEffect 7s ease-in-out infinite alternate-reverse;
+        }
+        @keyframes floatEffect {
+            0% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(10px, 20px) scale(1.05); }
+            100% { transform: translate(0, 0) scale(1); }
+        }
+
+        /* Cabeçalho do aplicativo */
+        .app-header {
+            background: var(--header-bg);
+            color: var(--header-text);
+            padding: 10px 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top-left-radius: var(--border-radius-soft);
+            border-top-right-radius: var(--border-radius-soft);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            transition: background 0.5s ease; /* Suaviza a transição de fundo */
+        }
+
+        .app-title {
+            font-family: 'Fredoka One', cursive;
+            margin: 0;
+            font-size: 1.2em;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            gap: 8px; /* Espaço entre o ícone e o texto */
+        }
+
+        .truck-icon { /* Estilo para o ícone do caminhão no título */
+            font-size: 1.1em;
+            transition: color 0.3s ease; /* Suaviza a mudança de cor do ícone */
+        }
+        .truck-icon.red { color: #DC143C; /* Vermelho Carmesim para 24280 */ }
+        .truck-icon.white { color: #FFFFFF; /* Branco para DAF 330 */ }
+
+
+        .back-button, .menu-icon {
+            font-size: 1.3em;
+            cursor: pointer;
+            padding: 3px;
+            user-select: none;
+        }
+
+        /* Conteúdo principal e formulário */
+        .main-content {
+            padding: 15px;
+            flex-grow: 1;
+            overflow-y: auto;
+            padding-bottom: calc(15px + var(--nav-height));
+        }
+
+        .form-title {
+            font-family: 'Fredoka One', cursive;
+            font-size: 1.5em;
+            color: var(--primary-color); /* Usa primary-color do tema */
+            text-align: center;
+            margin-bottom: 18px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+            transition: color 0.5s ease; /* Suaviza a transição de cor do título */
+        }
+
+        .input-group {
+            margin-bottom: var(--input-group-margin-bottom);
+            position: relative;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: var(--text-dark);
+            font-size: 0.88em;
+        }
+
+        .input-group input[type="text"],
+        .input-group input[type="number"],
+        .input-group input[type="date"],
+        .input-group select {
+            width: calc(100% - 20px);
+            padding: var(--input-padding);
+            border: 2px solid var(--input-border);
+            border-radius: 8px;
+            background-color: var(--input-bg);
+            font-size: 0.9em;
+            color: var(--text-dark);
+            transition: all 0.3s ease;
+            box-shadow: inset 0 1px 2px rgba(0,0,0,0.06);
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23666666'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 10px center;
+            background-size: 20px;
+        }
+
+        .input-group input[type="text"]:focus,
+        .input-group input[type="number"]:focus,
+        .input-group input[type="date"]:focus,
+        .input-group select:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(138, 43, 226, 0.2);
+            outline: none;
+        }
+
+        /* Estilo específico para inputs divididos */
+        .split-input {
+            display: flex;
+            gap: 10px;
+        }
+
+        .split-input > div {
+            flex: 1;
+        }
+
+        .split-input input, .split-input select {
+            width: calc(100% - 20px);
+        }
+
+        /* Botão de ação */
+        .action-button {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: var(--border-radius-soft);
+            /* Cor do botão de Vendas padrão */
+            background: linear-gradient(45deg, var(--button-gradient-start), var(--button-gradient-end));
+            color: white;
+            font-size: 1.05em;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: var(--button-shadow);
+            transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.5s ease; /* Suaviza a transição de fundo */
+            margin-top: 15px;
+            letter-spacing: 0.5px;
+            font-family: 'Fredoka One', cursive;
+        }
+        /* Cor do botão de Abastecimento padrão */
+        #fuelForm .action-button {
+            background: linear-gradient(45deg, var(--fuel-button-gradient-start), var(--fuel-button-gradient-end));
+        }
+
+
+        .action-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(255, 106, 136, 0.5);
+        }
+
+        .action-button:active {
+            transform: translateY(0);
+            box-shadow: var(--button-shadow);
+        }
+
+        /* Notificações (Pop-up/Snackbar) */
+        .notification {
+            position: fixed;
+            bottom: calc(var(--nav-height) + 15px);
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--notification-success);
+            color: white;
+            padding: 10px 18px;
+            border-radius: 8px;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+            z-index: 1000;
+            font-weight: 600;
+            text-align: center;
+            min-width: 200px;
+            font-size: 0.85em;
+        }
+
+        .notification.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .notification.error {
+            background-color: var(--notification-error);
+        }
+
+        /* Menu de Navegação Inferior */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            max-width: inherit;
+            height: var(--nav-height);
+            background-color: var(--nav-bg);
+            box-shadow: var(--nav-shadow);
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            border-bottom-left-radius: var(--border-radius-soft);
+            border-bottom-right-radius: var(--border-radius-soft);
+            z-index: 100;
+            transition: max-width 0.3s ease, border-radius 0.3s ease;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-light);
+            text-decoration: none;
+            font-size: 0.8em;
+            font-weight: 600;
+            transition: color 0.2s ease;
+            cursor: pointer;
+            padding: 5px;
+        }
+
+        .nav-item i {
+            font-size: 1.4em;
+            margin-bottom: 3px;
+        }
+
+        .nav-item.active {
+            color: var(--nav-active-color); /* Usa a cor ativa do tema */
+            transition: color 0.5s ease; /* Suaviza a transição de cor do item ativo */
+        }
+
+        /* Responsividade para telas maiores (Desktop/Tablet) */
+        @media (min-width: 768px) {
+            body {
+                background: linear-gradient(135deg, #ADD8E6, #87CEEB);
+            }
+
+            .app-container {
+                border-radius: var(--border-radius-soft);
+                height: 90vh;
+                max-height: 700px;
+            }
+
+            .bottom-nav {
+                position: absolute;
+                width: 100%;
+                border-radius: var(--border-radius-soft);
+                border-top-left-radius: 0;
+                border-top-right-radius: 0;
+            }
+
+            .main-content {
+                padding-bottom: calc(15px + var(--nav-height));
+            }
+        }
+
+        /* Responsividade para telas muito pequenas (Mobile) */
+        @media (max-width: 480px) {
+            .app-container {
+                border-radius: 0;
+                min-height: 100vh;
+                max-width: 100%;
+                height: 100vh;
+            }
+            .app-header {
+                border-radius: 0;
+            }
+            .main-content {
+                padding: 10px;
+            }
+            .form-title {
+                font-size: 1.4em;
+            }
+            .action-button {
+                font-size: 1em;
+                padding: 10px;
+            }
+            .input-group label {
+                font-size: 0.8em;
+            }
+            .input-group input {
+                font-size: 0.85em;
+            }
+            .bottom-nav {
+                border-radius: 0;
+            }
+            .nav-item {
+                font-size: 0.75em;
+            }
+            .nav-item i {
+                font-size: 1.3em;
+            }
+            .floating-icon-1, .floating-icon-2 {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body class="theme-24280">
+    <div class="app-container">
+        <!-- Ícones flutuantes de fundo (para desktop/tablet) -->
+        <span class="floating-icon-1"><i class="fa-solid fa-truck"></i></span>
+        <span class="floating-icon-2"><i class="fa-solid fa-helmet-safety"></i></span>
+
+        <header class="app-header">
+            <span class="back-button" onclick="history.back()"></span>
+            <h1 class="app-title">
+                <i class="fas fa-truck truck-icon" id="headerTruckIcon"></i> Vantal Construção
+            </h1>
+            <span class="menu-icon">☰</span>
+        </header>
+
+        <main class="main-content" id="mainContent">
+            <!-- Campo de seleção de caminhão, acima dos formulários -->
+            <div class="input-group">
+                <label for="truckSelect">Selecione o Caminhão</label>
+                <select id="truckSelect" required>
+                    <option value="">-- Escolha um caminhão --</option>
+                    <option value="24280" selected>Caminhão 24280</option>
+                    <option value="daf330">Caminhão DAF 330</option>
+                </select>
+            </div>
+
+            <!-- Formulários (Visibilidade controlada pelo JS) -->
+            <div id="salesFormContainer">
+                <h2 class="form-title">Registro de Vendas</h2>
+                <form id="salesForm">
+                    <div class="input-group">
+                        <label for="dataVenda">Data da Venda</label>
+                        <input type="date" id="dataVenda" required>
+                    </div>
+
+                    <div class="input-group split-input">
+                        <div>
+                            <label for="cidade">Cidade</label>
+                            <input type="text" id="cidade" placeholder="Ex: São Paulo" required>
+                        </div>
+                        <div>
+                            <label for="cliente">Cliente</label>
+                            <input type="text" id="cliente" placeholder="Nome do Cliente" required>
+                        </div>
+                    </div>
+
+                    <div class="input-group split-input">
+                        <div>
+                            <label for="valorVendido">Valor Vendido</label>
+                            <input type="number" id="valorVendido" placeholder="Ex: 1500.00" step="0.01" required>
+                        </div>
+                        <div>
+                            <label for="material">Material</label>
+                            <input type="text" id="material" placeholder="Ex: Cimento, Areia" required>
+                        </div>
+                    </div>
+
+                    <div class="input-group split-input">
+                        <div>
+                            <label for="valorDieselGasto">Valor Diesel Gasto</label>
+                            <input type="number" id="valorDieselGasto" placeholder="Ex: 250.00" step="0.01">
+                        </div>
+                        <div>
+                            <label for="valorParaEncher">Valor Carregamento</label>
+                            <input type="number" id="valorParaEncher" placeholder="Ex: 300.00" step="0.01">
+                        </div>
+                    </div>
+
+                    <div class="input-group split-input">
+                        <div>
+                            <label for="kmInicial">KM Inicial</label>
+                            <input type="number" id="kmInicial" placeholder="Ex: 10000">
+                        </div>
+                        <div>
+                            <label for="kmFinal">KM Final</label>
+                            <input type="number" id="kmFinal" placeholder="Ex: 10250">
+                        </div>
+                    </div>
+
+                    <div class="input-group split-input">
+                        <div>
+                            <label for="gastoAleatorio">Gasto Aleatório</label>
+                            <input type="number" id="gastoAleatorio" placeholder="Ex: 50.00" step="0.01">
+                        </div>
+                        <div>
+                            <label for="despesasAleatorias">Despesas Aleatórias</label>
+                            <input type="text" id="despesasAleatorias" placeholder="Descrição curta">
+                        </div>
+                    </div>
+
+                    <button type="submit" class="action-button">🛒 Gravar Venda</button>
+                </form>
+            </div>
+            <!-- O formulário de abastecimentos será carregado aqui -->
+            <div id="fuelFormContainer" style="display: none;">
+                <!-- Conteúdo do formulário de abastecimentos será inserido pelo JS -->
+            </div>
+        </main>
+
+        <div id="notification" class="notification"></div>
+
+        <!-- Menu de Navegação Inferior -->
+        <nav class="bottom-nav">
+            <a href="#" class="nav-item active" data-form="sales">
+                <i class="fas fa-shopping-cart"></i>
+                <span>Vendas</span>
+            </a>
+            <a href="#" class="nav-item" data-form="fuel">
+                <i class="fas fa-gas-pump"></i>
+                <span>Abastec.</span>
+            </a>
+        </nav>
+    </div>
+
+    <script>
+        // URLs das Web Apps do Google Apps Script para cada caminhão
+        const SCRIPT_URL_24280 = 'https://script.google.com/macros/s/AKfycbyU9YQSnOwH_ndzf9USv3BZzHQIBJho4FqN8txIo7C7zhsPMKTPxlIG2JZE9KI6PsmB/exec'; // URL do seu script atual (para o 24280)
+        const SCRIPT_URL_DAF330 = 'https://script.google.com/macros/s/AKfycbwV353b0u6TxDKtlRIuh_aYerQGlQt6kfwFjQ2kymJ8TibcznHRGofCc22eoQaOhz9N/exec'
+        const appBody = document.body; // Referência ao body para mudar o tema
+        const salesFormContainer = document.getElementById('salesFormContainer');
+        const fuelFormContainer = document.getElementById('fuelFormContainer');
+        const notificationDiv = document.getElementById('notification');
+        const navItems = document.querySelectorAll('.nav-item');
+        const truckSelect = document.getElementById('truckSelect');
+        const headerTruckIcon = document.getElementById('headerTruckIcon'); // O ícone do caminhão no cabeçalho
+
+        // Conteúdo HTML para o formulário de abastecimentos
+        const fuelFormHTML = `
+            <h2 class="form-title">Registro de Abastecimento</h2>
+            <form id="fuelForm">
+                <div class="input-group">
+                    <label for="dataFuel">Data</label>
+                    <input type="date" id="dataFuel" required>
+                </div>
+
+                <div class="input-group">
+                    <label for="localFuel">Local</label>
+                    <input type="text" id="localFuel" placeholder="Ex: Posto Ipiranga" required>
+                </div>
+
+                <div class="input-group split-input">
+                    <div>
+                        <label for="valorPagoFuel">Valor Pago</label>
+                        <input type="number" id="valorPagoFuel" placeholder="Ex: 300.00" step="0.01" required>
+                    </div>
+                    <div>
+                        <label for="litrosFuel">Litros</label>
+                        <input type="number" id="litrosFuel" placeholder="Ex: 50.00" step="0.01" required>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label for="valorPorLitroFuel">Valor por Litro</label>
+                    <input type="number" id="valorPorLitroFuel" placeholder="Ex: 5.99" step="0.01" required>
+                </div>
+
+                <button type="submit" class="action-button">⛽ Abastecer</button>
+            </form>
+        `;
+
+        // Insere o HTML do formulário de abastecimentos
+        fuelFormContainer.innerHTML = fuelFormHTML;
+
+        // Função para aplicar o tema visual
+        function applyTheme(truckType) {
+            // Remove todas as classes de tema e adiciona a correta
+            appBody.classList.remove('theme-24280', 'theme-daf330');
+            if (truckType === '24280') {
+                appBody.classList.add('theme-24280');
+                headerTruckIcon.classList.remove('white');
+                headerTruckIcon.classList.add('red');
+            } else if (truckType === 'daf330') {
+                appBody.classList.add('theme-daf330');
+                headerTruckIcon.classList.remove('red');
+                headerTruckIcon.classList.add('white');
+            } else { // Caso nenhum caminhão seja selecionado (opção vazia)
+                headerTruckIcon.classList.remove('red', 'white');
+            }
+        }
+
+        // Adiciona listener para a mudança de seleção do caminhão
+        truckSelect.addEventListener('change', () => {
+            applyTheme(truckSelect.value);
+            // Opcional: Limpar formulários ao trocar de caminhão para evitar envio de dados cruzados
+            // salesForm.reset();
+            // document.getElementById('fuelForm').reset();
+            showNotification(`Caminhão ${truckSelect.value || 'não selecionado'} selecionado!`, false);
+        });
+
+        // Adiciona listeners para os botões do menu (Vendas/Abastecimento)
+        navItems.forEach(item => {
+            item.addEventListener('click', (e) => {
+                e.preventDefault();
+                const formType = item.dataset.form;
+
+                navItems.forEach(nav => nav.classList.remove('active'));
+                item.classList.add('active');
+
+                if (formType === 'sales') {
+                    salesFormContainer.style.display = 'block';
+                    fuelFormContainer.style.display = 'none';
+                } else if (formType === 'fuel') {
+                    salesFormContainer.style.display = 'none';
+                    fuelFormContainer.style.display = 'block';
+                }
+            });
+        });
+
+        // Função para obter a URL correta do Apps Script
+        function getScriptUrl() {
+            const selectedTruck = truckSelect.value;
+            if (selectedTruck === '24280') {
+                return SCRIPT_URL_24280;
+            } else if (selectedTruck === 'daf330') {
+                return SCRIPT_URL_DAF330;
+            }
+            return null; // Caso nenhum caminhão seja selecionado
+        }
+
+        // Event Listener para o formulário de Vendas
+        const salesForm = document.getElementById('salesForm');
+        salesForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const scriptUrl = getScriptUrl();
+            if (!scriptUrl) {
+                showNotification("Por favor, selecione o caminhão.", true);
+                return;
+            }
+
+            console.log("Enviando dados para a URL (Vendas):", scriptUrl); // LOG CRÍTICO
+
+            const now = new Date();
+            const formattedDateTime = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')} ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}:${String(now.getSeconds()).padStart(2, '0')}`;
+
+            const formData = {
+                type: 'venda',
+                dataVenda: document.getElementById('dataVenda').value,
+                cidade: document.getElementById('cidade').value,
+                cliente: document.getElementById('cliente').value,
+                valorVendido: parseFloat(document.getElementById('valorVendido').value),
+                dataCadastro: formattedDateTime,
+                material: document.getElementById('material').value,
+                valorDieselGasto: parseFloat(document.getElementById('valorDieselGasto').value || 0),
+                valorParaEncher: parseFloat(document.getElementById('valorParaEncher').value || 0),
+                kmInicial: parseFloat(document.getElementById('kmInicial').value || 0),
+                kmFinal: parseFloat(document.getElementById('kmFinal').value || 0),
+                gastoAleatorio: parseFloat(document.getElementById('gastoAleatorio').value || 0),
+                despesasAleatorias: document.getElementById('despesasAleatorias').value
+            };
+
+            if (!formData.dataVenda || !formData.cidade || !formData.cliente || !formData.valorVendido || !formData.material) {
+                showNotification("Por favor, preencha todos os campos obrigatórios da venda.", true);
+                return;
+            }
+
+            try {
+                const response = await fetch(scriptUrl, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(formData),
+                });
+                showNotification("✅ Venda registrada com sucesso!", false);
+                salesForm.reset();
+            }
+            catch (error) {
+                console.error('Erro ao enviar dados da venda:', error);
+                showNotification("❌ Erro ao registrar venda. Tente novamente.", true);
+            }
+        });
+
+        // Event Listener para o formulário de Abastecimentos
+        setTimeout(() => {
+            const fuelForm = document.getElementById('fuelForm');
+            if (fuelForm) {
+                fuelForm.addEventListener('submit', async (e) => {
+                    e.preventDefault();
+
+                    const scriptUrl = getScriptUrl();
+                    if (!scriptUrl) {
+                        showNotification("Por favor, selecione o caminhão.", true);
+                        return;
+                    }
+
+                    console.log("Enviando dados para a URL (Abastecimento):", scriptUrl); // LOG CRÍTICO
+
+                    const now = new Date();
+                    const formattedDateTimeFuel = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')} ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}:${String(now.getSeconds()).padStart(2, '0')}`;
+
+                    const formData = {
+                        type: 'abastecimento',
+                        data: document.getElementById('dataFuel').value,
+                        dataCadastro: formattedDateTimeFuel, // Data e Hora de cadastro automáticas para abastecimento
+                        local: document.getElementById('localFuel').value,
+                        valorPago: parseFloat(document.getElementById('valorPagoFuel').value),
+                        litros: parseFloat(document.getElementById('litrosFuel').value),
+                        valorPorLitro: parseFloat(document.getElementById('valorPorLitroFuel').value)
+                    };
+
+                    if (!formData.data || !formData.local || !formData.valorPago || !formData.litros || !formData.valorPorLitro) {
+                        showNotification("Por favor, preencha todos os campos do abastecimento.", true);
+                        return;
+                    }
+
+                    try {
+                        const response = await fetch(scriptUrl, {
+                            method: 'POST',
+                            mode: 'no-cors',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(formData),
+                        });
+                        showNotification("⛽ Abastecimento registrado com sucesso!", false);
+                        fuelForm.reset();
+                    }
+                    catch (error) {
+                        console.error('Erro ao enviar dados do abastecimento:', error);
+                        showNotification("❌ Erro ao registrar abastecimento. Tente novamente.", true);
+                    }
+                });
+            }
+        }, 0);
+
+        function showNotification(message, isError = false) {
+            notificationDiv.textContent = message;
+            notificationDiv.classList.remove('error');
+            if (isError) {
+                notificationDiv.classList.add('error');
+            }
+            notificationDiv.classList.add('show');
+
+            setTimeout(() => {
+                notificationDiv.classList.remove('show');
+            }, 3000);
+        }
+
+        // Inicializa o tema ao carregar a página com o caminhão pré-selecionado
+        document.addEventListener('DOMContentLoaded', () => {
+            applyTheme(truckSelect.value);
+            showNotification(`Caminhão ${truckSelect.value} selecionado!`, false);
+        });
+    </script>
+</body>
+</html>
